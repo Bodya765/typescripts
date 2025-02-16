@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AdController } from './ad.controller';
 import { AdService } from './ad.service';
+import { Ad, AdSchema } from './ad.entity';
 
 @Module({
+  imports: [
+    MongooseModule.forFeature([{ name: Ad.name, schema: AdSchema }]),
+  ],
   controllers: [AdController],
-  providers: [AdService]
+  providers: [AdService],
 })
 export class AdModule {}

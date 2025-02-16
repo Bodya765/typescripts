@@ -22,4 +22,4 @@ export const AdSchema = new Schema<Ad>(
 AdSchema.index({ price: 1 });
 AdSchema.index({ date: 1 });
 
-
+export const AdModel = mongoose.model<Ad>('Ad', AdSchema);

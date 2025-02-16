@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Ad } from './ad.entity';
+import { Ad } from '../ad/ad.entity';  // Імпортуємо модель Ad
 
 @Injectable()
-export class AdService {
+export class DbProvider {
   constructor(
-    @InjectModel(Ad.name) private adModel: Model<Ad>,
+    @InjectModel(Ad.name) private readonly adModel: Model<Ad>,  // Використовуємо правильну модель
   ) {}
 
   async getAllAds(): Promise<Ad[]> {
@@ -18,11 +18,11 @@ export class AdService {
     return newAd.save();
   }
 
-  async updateAd(id: string, ad: Ad): Promise<Ad | null> {
+  async updateAd(id: string, ad: Ad): Promise<Ad> {
     return this.adModel.findByIdAndUpdate(id, ad, { new: true }).exec();
   }
 
-  async deleteAd(id: string): Promise<void> {
-    await this.adModel.findByIdAndDelete(id).exec();
+  async deleteAd(id: string): Promise<Ad> {
+    return this.adModel.findByIdAndDelete(id).exec();
   }
 }

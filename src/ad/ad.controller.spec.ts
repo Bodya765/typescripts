@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdController } from './ad.controller';
+import { Ad } from './ad.entity'; 
 
 describe('AdController', () => {
   let controller: AdController;

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Ad } from './ad.entity';
+import { Ad } from '../schemas/ad.schema';  
 
 @Injectable()
 export class AdService {
   constructor(
-    @InjectModel(Ad.name) private adModel: Model<Ad>,
+    @InjectModel('Ad') private adModel: Model<Ad>, // Використовуємо рядок
   ) {}
 
   async getAllAds(): Promise<Ad[]> {
@@ -18,7 +18,7 @@ export class AdService {
     return newAd.save();
   }
 
-  async updateAd(id: string, ad: Ad): Promise<Ad | null> {
+  async updateAd(id: string, ad: Partial<Ad>): Promise<Ad | null> {
     return this.adModel.findByIdAndUpdate(id, ad, { new: true }).exec();
   }
 

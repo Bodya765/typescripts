@@ -17,8 +17,8 @@ export class AdController {
   }
 
   @Put(':id')
-  async updateAd(@Param('id') id: string, @Body() ad: Ad): Promise<Ad> {
-    return this.adService.updateAd(id, ad);
+  async updateAd(@Param('id') id: string, @Body() ad: Ad): Promise<Ad | null> { 
+    return this.adService.updateAd(id, ad); 
   }
 
   @Delete(':id')

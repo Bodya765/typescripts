@@ -1,14 +1,18 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './user.schema'; 
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
+import { Schema, Types, Document } from 'mongoose';
 
-@Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), 
-  ],
-  controllers: [UserController],
-  providers: [UserService],
-})
-export class UserModule {}
+export interface User extends Document {
+  username: string;
+  password: string;
+  email: string;
+  role: string;
+}
+
+export const UserSchema = new Schema<User>(
+  {
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    role: { type: String, default: 'user' },
+  },
+  { timestamps: true }
+);
